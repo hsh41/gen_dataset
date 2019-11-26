@@ -99,12 +99,14 @@ if __name__ == '__main__':
                       bbox_df['y0'].iloc[num], bbox_df['x0'].iloc[num]:bbox_df['x0'].iloc[num] + bbox_df['w'].iloc[num]]
             cv2.imwrite(os.path.join(data_dir, 'images', data_df['data_path'].iloc[num]), img)
     for n, g in df.groupby('tt'):
+        # train
+        if n == 1:
+            pdb.set_trace()
+            g = g.groupby('cls').apply(lambda x: aug(x, 5))
+            g = g.sample(frac=1).reset_index(drop=True)
+            print('train len', len(g))
+            gen(g, 1, 'train', 1)
         # test
-        if n == 0:
+        elif n == 0:
             print('test len', len(g))
             gen(g, 1, 'test', 1)
-        # train
-        elif n == 1:
-            g = g.groupby('cls').apply(lambda x: aug(x, 5))
-            print('train len', len(g))
-            gen(g, 8, 'train', 1)
