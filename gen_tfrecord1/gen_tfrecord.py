@@ -53,10 +53,10 @@ def fetch_data(data_dir, batch_size, num_epochs=1, mode='train'):
         return expression
 
     if mode == 'train':
-        file_name = np.loadtxt(os.path.join(data_dir, './augmented_data.txt'), dtype=object, delimiter=' ')
+        file_name = np.loadtxt(os.path.join(data_dir, '../text_file/augmented_data.txt'), dtype=object, delimiter=' ')
         np.random.shuffle(file_name)
     elif mode == 'test':
-        file_name = np.loadtxt(os.path.join(data_dir, 'ygyd_test.txt'), dtype=object, delimiter=' ')
+        file_name = np.loadtxt(os.path.join(data_dir, '../text_file/ygyd_test.txt'), dtype=object, delimiter=' ')
     file_path = tf.convert_to_tensor(file_name[:, 0], tf.string)
     bbox = tf.convert_to_tensor(file_name[:, 1:5], tf.int32)
     expression = tf.convert_to_tensor(file_name[:, -1], tf.int32)
